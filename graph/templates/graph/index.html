@@ -1,0 +1,35 @@
+{% load bootstrap3 %}
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+
+  {% bootstrap_messages %}
+  
+  <div class="container">
+    <div class="col-xs-12 col-md-4">
+    </div>
+    {% block body %}
+    <div class="col-xs-12 col-md-4">
+      <div class="page-header">
+        <h3>Trains</h3>
+      </div>
+      <img src="{% static 'graph/1.jpg' %}" class="img-responsive" alt="photo example" />
+      <hr>
+      <div>
+        <form action="{% url 'graph:index' %}" method="post">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+
+</body>
+</html>

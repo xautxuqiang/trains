@@ -1,0 +1,18 @@
+{% extends "graph/index.html" %}
+{% load bootstrap3 %}
+
+{% block body %}
+<div class="col-xs-12 col-md-4">
+  <div class="page-header">
+    <h3>All Path Posibilities Equal Times</h3>
+  </div>
+  <div>
+    <form action="{% url 'graph:equalTimes' %}" method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</div>
+
+{% endblock %}
