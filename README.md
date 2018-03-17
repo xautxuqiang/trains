@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Trains
 
 1. install python3-tk
@@ -11,6 +10,3 @@ Trains
   pytohn3 manage.py makemigrations
 4. run
   python3 manage.py runserver
-=======
-# trains
->>>>>>> 2d02395b4be68df2dd234faba29c125fe8b93560
