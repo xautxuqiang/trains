@@ -25,7 +25,7 @@ SECRET_KEY = '89bjvm*vxea#*7)k0u))c574-_#q=kn&8t9u^(s^h*ewh2vaf)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['18.219.40.176',]
 
 
 # Application definition
@@ -120,3 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/ubuntu/trains/collected_static/'

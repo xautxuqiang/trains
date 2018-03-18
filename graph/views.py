@@ -4,6 +4,8 @@ from django.http import HttpResponse
 
 import json, os
 import networkx as nx
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # Create your views here.
@@ -13,6 +15,8 @@ def index(request):
         if form.is_valid():
             data_input = form.cleaned_data['vertex_edge']
             # Generate graph.
+            global g
+            g = {}
             graph(data_input)
             return redirect(reverse("graph:graphDisplay"))
     else:
@@ -20,8 +24,6 @@ def index(request):
         context = {'form': form}
     return render(request, 'graph/index.html', context)
 
-# global easy to use
-g = {}
 
 # AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7
 def graph(data_input):
@@ -41,7 +43,6 @@ def graph(data_input):
     return g
     
 def graph_display(request):
-    print(g)
     vertexes = []
     edges = []
     # v: vertex, w: end_vertex and weight
@@ -56,7 +57,7 @@ def graph_display(request):
     DG.add_edges_from(edges)
     nx.draw_networkx(DG)
     # save the directed graph png
-    plt.savefig('/home/xu/trains/graph/static/graph/direct-graph.png')
+    plt.savefig('/home/ubuntu/trains/collected_static/graph/direct-graph.png')
     context = {'graph': g}
     return render(request, 'graph/graphDisplay.html', context)
 
@@ -78,7 +79,6 @@ def path_length(request):
 # path length calculate function
 def path_length_calc(path):
     path_list = path.split('-') # ['A','B','C']
-    print(g)
     length = 0
     # calculate (vertexes -1)
     for i in range(len(path_list)-1):
@@ -182,7 +182,8 @@ def all_path_calc_lesstimes(v_end, path, times):
         return
     # end is the v_end
     if len(path) > 1 and path[-1] == v_end:
-        lesstimes_result_path.append(path)
+        if path not in lesstimes_result_path:
+            lesstimes_result_path.append(path)
     for w in g[path[-1]]:
         if w[1] == 0:
             continue
@@ -213,7 +214,8 @@ def all_path_calc_equaltimes(v_end, path, times):
         return
     # end is the v_end
     if len(path) == times+1 and path[-1] == v_end:
-        equaltimes_result_path.append(path)
+        if path not in equaltimes_result_path:
+            equaltimes_result_path.append(path)
     for w in g[path[-1]]:
         if w[1] == 0:
             continue
@@ -245,7 +247,8 @@ def all_path_calc_lessdistance(v_end, path, distance):
     if distance <= 0:
         return
     if len(path) >1 and v_end == path[-1]:
-        lessdis_result_path.append(path)
+        if path not in lessdis_result_path:
+            lessdis_result_path.append(path)
     for w in g[path[-1]]:
         if w[1] == 0:
             continue
