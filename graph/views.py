@@ -78,7 +78,11 @@ def path_length(request, graph):
         if form.is_valid():
             path = form.cleaned_data['path']
             # lengtg calc
-            length = path_length_calc(path, g_graph)
+            try:
+                length = path_length_calc(path, g_graph)
+            except KeyError:
+                messages.warning(request, "Vertex must in Directed Graph.")
+                return redirect(reverse('graph:pathLength', arg=[graph]))
             return HttpResponse("This path' length is {}".format(length))
     context = {'form': form, 'g':graph}
     return render(request, 'graph/pathLengthCalc.html', context)
@@ -117,10 +121,14 @@ def shortest_path(request, graph):
              vertex_start = form.cleaned_data['vertex_start']
              vertex_end = form.cleaned_data['vertex_end']
              # calculate the shortest path result
-             if vertex_end != vertex_start:
-                 result = shortest_path_calc(vertex_start, vertex_end, g_graph)
+             if vertex_start in g_graph and vertex_end in g_graph:
+                 if vertex_end != vertex_start:
+                     result = shortest_path_calc(vertex_start, vertex_end, g_graph)
+                 else:
+                     result = shortest_path_calc1(vertex_start, g_graph)
              else:
-                 result = shortest_path_calc1(vertex_start, g_graph)
+                 messages.warning(request, "Vertex must in Directed Graph.")
+                 return redirect(reverse('graph:shortestPath', args=[graph,]))
              return HttpResponse("The {} to {} 's shortest path is {}".format(vertex_start, vertex_end, result))
     context = {'form': form, 'g': graph}
     return render(request, 'graph/shortestPath.html', context)
@@ -182,7 +190,11 @@ def less_times(request, graph):
             # storage the all path result
             global lesstimes_result_path
             lesstimes_result_path = []
-            all_path_calc_lesstimes(v_end, [v_start], times, g_graph)
+            if v_start in g_graph and v_end in g_graph and times > 0:
+                all_path_calc_lesstimes(v_end, [v_start], times, g_graph)
+            else:
+                messages.warning(request, "Vertex must in Directed Graph or Times > 0")
+                return redirect(reverse('graph:lessTimes', args=[graph,]))
             return HttpResponse('ALl path is {}'.format(lesstimes_result_path))
     context = {'form': form, 'g': graph}
     return render(request, 'graph/lessTimes.html', context)
@@ -216,7 +228,11 @@ def equal_times(request, graph):
             # result
             global equaltimes_result_path
             equaltimes_result_path = []
-            all_path_calc_equaltimes(v_end, [v_start], times, g_graph) 
+            if v_start in g_graph and v_end in g_graph and times >0:
+                all_path_calc_equaltimes(v_end, [v_start], times, g_graph) 
+            else:
+                messages.warning(request, "Vertex must in Directed Graph or times must > 0.")
+                return redirect(reverse('graph:equalTimes', args=[graph,]))
             return HttpResponse('All Path is {}'.format(equaltimes_result_path))
     context = {'form': form, 'g':graph}
     return render(request, 'graph/equalTimes.html', context)
@@ -250,7 +266,11 @@ def less_distance(request, graph):
             # result
             global lessdis_result_path
             lessdis_result_path = []
-            all_path_calc_lessdistance(v_end, [v_start,], distance, g_graph) 
+            if v_start in g_graph and v_end in g_graph and distance >0:
+                all_path_calc_lessdistance(v_end, [v_start,], distance, g_graph) 
+            else:
+                messages.warning(request, "Vertex must in Directed Graph or Distance must >0")
+                return redirect(reverse('graph:lessDistance', args=[graph,]))
             return HttpResponse('All Path is {}'.format(lessdis_result_path))
     context = {'form': form, 'g': graph}
     return render(request, 'graph/lessDistance.html', context)
