@@ -8,11 +8,11 @@
   </div>
   <img src="{% static 'graph/direct-graph.png' %}" alt="direct-graph">
   <div class="button-item">
-    <a class="btn btn-default btn-lg" href="{% url 'graph:pathLength' %}" role="button">Path Length Calculation</a>
+    <a class="btn btn-default btn-lg" href="{% url 'graph:pathLength' g %}" role="button">Path Length Calculation</a>
     <hr>
-    <a class="btn btn-default btn-lg" href="{% url 'graph:shortestPath' %}" role="button">Shortest Path Calculation</a>
+    <a class="btn btn-default btn-lg" href="{% url 'graph:shortestPath' g %}" role="button">Shortest Path Calculation</a>
     <hr>
-    <a class="btn btn-default btn-lg" href="{% url 'graph:allPath' %}" role="button">ALl Path Possibilities</a>
+    <a class="btn btn-default btn-lg" href="{% url 'graph:allPath' g %}" role="button">ALl Path Possibilities</a>
   </div>
 </div>
 {% endblock %}

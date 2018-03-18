@@ -7,7 +7,7 @@
     <h3>Shortest Path Calculate</h3>
   </div>
   <div>
-    <form action="{% url 'graph:shortestPath' %}" method="post">
+    <form action="{% url 'graph:shortestPath' g %}" method="post">
       {% csrf_token %}
       {% bootstrap_form form %}
       <input type="submit" value="Submit">

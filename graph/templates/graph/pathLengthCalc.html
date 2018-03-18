@@ -7,7 +7,7 @@
     <h3>Path Length Calculate</h3>
   </div>
   <div>
-    <form action="{% url 'graph:pathLength' %}" method="post">
+    <form action="{% url 'graph:pathLength' g %}" method="post">
       {% csrf_token %}
       {% bootstrap_form form %}
       <input type="submit" value="Submit">

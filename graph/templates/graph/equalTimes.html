@@ -7,7 +7,7 @@
     <h3>All Path Posibilities Equal Times</h3>
   </div>
   <div>
-    <form action="{% url 'graph:equalTimes' %}" method="post">
+    <form action="{% url 'graph:equalTimes' g %}" method="post">
       {% csrf_token %}
       {% bootstrap_form form %}
       <input type="submit" value="Submit">

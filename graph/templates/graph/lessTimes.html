@@ -7,7 +7,7 @@
     <h3>All Path Posibilities Less And Equal Times</h3>
   </div>
   <div>
-    <form action="{% url 'graph:lessTimes' %}" method="post">
+    <form action="{% url 'graph:lessTimes' g %}" method="post">
       {% csrf_token %}
       {% bootstrap_form form %}
       <input type="submit" value="Submit">
